@@ -1,0 +1,43 @@
+:root, [data-theme=light] {
+    --page-max-width: 100% !important;
+ 
+
+
+}
+
+:root{
+        --sidebar-hover-color: #f3f3f3;
+    --sidebar-active-color: rgb(205, 227, 252)!important;
+    --sidebar-border-color: #ededed;
+    --surface-modal: rgba(255, 255, 255, 1);
+    --divider-color: rgba(237, 237, 237, 1);
+    --sidebar-width: 275px!important;
+    --left-sidebar-width: 275px!important;
+}
+
+
+.app-switcher-menu {
+
+    width: 260px!important;
+ 
+}
+
+.app-switcher-dropdown .standard-sidebar-item .d-flex{
+    width: 190px!important;
+}
+
+.body-sidebar .standard-sidebar-item{
+        padding: 5px!important;
+}
+
+.body-sidebar .standard-sidebar-item .sidebar-item-label{
+    font-size: var(--text-md)!important;
+}
+
+.widget.shortcut-widget-box{
+    padding: 16px!important;
+}
+
+.layout-main-section .frappe-list .result-container .result .list-row-container{
+    height: 45px!important;
+}

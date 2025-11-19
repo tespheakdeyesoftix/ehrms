@@ -14,18 +14,53 @@ app_license = "mit"
 # add_to_apps_screen = [
 # 	{
 # 		"name": "ehrms",
-# 		"logo": "/assets/ehrms/logo.png",
-# 		"title": "ESTC Human Resource",
-# 		"route": "/ehrms",
-# 		"has_permission": "ehrms.api.permission.has_app_permission"
+# 		"logo": "/assets/ehrms/images/ehrms_logo.png",
+# 		"title": "eHRMS",
+# 		"route": "/app/ehrms",
+# 		"has_permission": "ehrms.permission.check_app_permission"
 # 	}
 # ]
+
+
+# update hook in hrms app 
+from  erpnext import hooks as erpnext 
+from hrms import hooks as hrms
+import frappe
+
+hrms.add_to_apps_screen = [
+	{
+		"name": "hrms",
+		"logo": "/assets/ehrms/images/ehrms_logo.png",
+		"title": "eHRMS",
+		"route": "/app/staffing",
+		"has_permission": "ehrms.overrides.utils.check_hrms_app_permission",
+	}
+]
+
+
+# erpnext.add_to_apps_screen  = [
+# 	{
+# 		"name": "ePOS",
+# 		"logo": "/assets/erpnext/images/erpnext-logo.svg",
+# 		"title": "ePOS",
+# 		"route": "/home",
+# 		"has_permission": "ehrms.overrides.utils.check_erpnext_app_permission",
+# 	}
+# ]
+
+
+
+
+ 
+# *******************Monkey Patch**********************
+import ehrms.patches.override_modules
+
 
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/ehrms/css/ehrms.css"
+app_include_css = "/assets/ehrms/css/ehrms.css"
 # app_include_js = "/assets/ehrms/js/ehrms.js"
 
 # include js, css files in header of web template
@@ -86,7 +121,7 @@ app_license = "mit"
 # ------------
 
 # before_install = "ehrms.install.before_install"
-# after_install = "ehrms.install.after_install"
+after_install = "ehrms.install.after_install"
 
 # Uninstallation
 # ------------
@@ -120,9 +155,12 @@ app_license = "mit"
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
+permission_query_conditions = {
+	"Role": "ehrms.permission.get_role_permission",
+	"Module Def": "ehrms.permission.get_module_def_permission",
+	"Language": "ehrms.permission.get_language_permission",
+}
+
 #
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
@@ -169,9 +207,13 @@ app_license = "mit"
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "ehrms.event.get_events"
-# }
+override_whitelisted_methods = {
+	"hrms.hr.utils.check_app_permission": "ehrms.overrides.utils.check_hrms_app_permission",
+	"erpnext.check_app_permission": "ehrms.overrides.utils.check_erpnext_app_permission",
+	"frappe.utils.modules.get_modules_from_all_apps": "ehrms.overrides.utils.get_modules_from_all_apps",
+	"hrms.hr.dashboard_chart_source.hiring_vs_attrition_count.hiring_vs_attrition_count.get_data": "ehrms.overrides.dashboard_chart_source.hiring_vs_attrition_count.get_data"
+}
+
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
