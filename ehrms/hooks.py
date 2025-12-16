@@ -53,7 +53,7 @@ hrms.add_to_apps_screen = [
 
  
 # *******************Monkey Patch**********************
-import ehrms.patches.override_modules
+#import ehrms.patches.override_modules
 
 
 # Includes in <head>
